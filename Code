@@ -1,0 +1,254 @@
+#include <reg51.h>
+sbit P10=P1^0; // choose automatic or manual
+sbit P11=P1^1;//choose water ==> hot 0r cold
+                                  ////////              A U T O M A T I C     S W I T C H E S / M O D E S         ///////
+sbit P30=P3^0; //cloth quality in automatic
+sbit P31=P3^1; //requirement of water in automatic
+sbit P32=P3^2; //water temperature in automatic
+sbit P33=P3^3; //detergent in automatic
+sbit P34=P3^4; //load in automatic
+sbit P35=P3^5; //wash cycle in automatic
+                                   ////                    M A N U A L        S W I T C H E S   /////////////
+sbit P12=P1^2; // In manual mood choose washing
+sbit P13=P1^3;// In manual mood choose  rinsing 
+sbit P14=P1^4; // In manual mood choose spinning
+sbit P15=P1^5;// In manual mood choose  drying
+                                          //           O P E R A T I O N S    //
+sbit LED1=P2^0; //washing
+sbit LED2=P2^1;//rinse
+sbit LED3=P2^2;//spin
+sbit LED4=P2^3;//dry
+sbit LED5=P2^7;//buzzer
+sbit P17=P1^7; // Lid
+void buzzer( );
+void delay1( );
+void delay2( );
+void delay3( );
+void delay4( );
+void main()
+	{
+	P1=0X00;
+	P2=0X00;
+	P3=0X00;
+	if (P17==0)		  /// if Lid is open 
+	{ P2 =0X00;}
+	if (P30==0)			 // For automatic modes
+	{ P2 =0X00;}
+	if (P31==0)
+	{ P2 =0X00;}
+	if (P32==0)
+	{ P2 =0X00;}
+	if (P33==0)
+	{ P2 =0X00;}
+	if (P34==0)
+	{ P2 =0X00;}
+	if (P35==0)
+	{ P2 =0X00;}
+   	if (P17==1){		//	if Lid is close 	
+	if (P30==1){			   
+	if (P31==1){		  
+	if (P32==1){	  
+	if (P33==1){
+	if (P34==1){
+	if (P35==1){  
+	if (P10==1){
+		if (P11==0)      // use cold water
+		{
+	     	LED1=1;
+		LED2=0;
+		LED3=0;
+		LED4=0;
+		delay1();
+		if (P17==0)		  /// if Lid is open 
+     	{ P2 =0X00;}
+	    	LED2=1;
+		LED1=0;
+		LED3=0;
+		LED4=0;
+	    delay2();
+		if (P17==0)		  /// if Lid is open 
+	    { P2 =0X00;}
+		    LED3=1;
+		LED2=0;
+		LED1=0;
+		LED4=0;
+		delay3();
+		if (P17==0)		  /// if Lid is open 
+	    { P2 =0X00;}
+		    LED4=1;
+		LED1=0;
+		LED2=0;
+		LED3=0;
+		delay4();
+		buzzer();
+		P2=0X00;
+		while (P11==0);}
+	if (P11==1)            // use hot water
+	{
+	     	LED1=1;
+		LED2=0;
+		LED3=0;
+		LED4=0;
+		delay1();
+		if (P17==0)		  /// if Lid is open 
+     	{ P2 =0X00;}
+	    	LED2=1;
+		LED1=0;
+		LED3=0;
+		LED4=0;
+	    delay2();
+		if (P17==0)		  /// if Lid is open 
+	    { P2 =0X00;}
+		    LED3=1;
+		LED2=0;
+		LED1=0;
+		LED4=0;
+		delay3();
+		if (P17==0)		  /// if Lid is open 
+	{ P2 =0X00;}
+		     LED4=1;
+		LED1=0;
+		LED2=0;
+		LED3=0;
+		delay4();
+		buzzer();
+		P2=0X00;
+		while (P11==1);}
+		while (P10=1);
+		}   }  }   }    }    }    }    
+		                    //   ----------------------------------------------------------- //
+
+	if (P10==0)      //    Manual  Mode
+	{	 
+	    if (P11==1)   //  use cold water
+	{	   
+     if	(P12==1) //        In manual mood choose washing
+		 {	 if (P17==0)		  /// if Lid is open 
+	{ P2 =0X00;}
+			 LED1=1;
+	    delay1();
+		P2=0X00;
+		buzzer();
+		while (P12==1);	}
+		 if	(P13==1)//       In manual mood choose rinsing
+		 {	  if (P17==0)		  /// if Lid is open 
+	{ P2 =0X00;}
+			 LED2=1;
+	    delay2();
+		P2=0X00;
+		buzzer();
+		while (P12==1);	}
+		if	(P14==1) //        In manual mood choose spinning
+		 {
+		 if (P17==0)		  /// if Lid is open 
+	{ P2 =0X00;}
+			 LED3=1;
+	    delay3();
+		P2=0X00;
+		buzzer();
+		while (P14==1);	} 	
+	if	(P15==1) //    In manual mood choose drying
+		 {
+		 if (P17==0)		  /// if Lid is open 
+	{ P2 =0X00;}
+			 LED4=1;
+	    delay4();
+		P2=0X00;
+		buzzer();
+		while (P15==1);	}
+		P2=0X00;
+		while (P11==1);
+	} 
+	if (P11==0) //     use hot water
+	{	   
+     if	(P12==1) //       In manual mood choose washing
+		 {if (P17==0)		  /// if Lid is open 
+	{ P2 =0X00;}
+			 LED1=1;
+	    delay1();
+		P2=0X00;
+		buzzer();
+		while (P12==1);	}
+		 if	(P13==1)//      In manual mood choose rinsing
+		 { if (P17==0)		  /// if Lid is open 
+	{ P2 =0X00;}
+			 LED2=1;
+	    delay2();
+		P2=0X00;
+		buzzer();
+		while (P12==1);	}
+		if	(P14==1) //       In manual mood choose spinning
+		 {		if (P17==0)		  /// if Lid is open 
+	{ P2 =0X00;}
+			 LED3=1;
+	    delay3();
+		P2=0X00;
+		buzzer();
+		while (P14==1);	} 	
+	if	(P15==1) //      In manual mood choose drying
+		 {		if (P17==0)		  /// if Lid is open 
+	{ P2 =0X00;}
+			 LED4=1;
+	    delay4();
+		P2=0X00;
+		buzzer();
+		while (P15==1);	}
+		P2=0X00;
+		while (P11==0);
+	} 
+}}}
+void buzzer( )
+{	 char r;
+  for(r=1;r<150;r++){
+	 LED5=1;
+	 LED5=0;} }
+	void delay1() //           for 20 min
+	{
+		unsigned int x;
+    for(x=1;x<=24000;x++){
+TMOD=0x01;
+TL0=0XFE;		
+TH0=0x4B;			 
+TR0=1;
+while(TF0==0);
+TR0=0;    
+TF0=0;  
+	}
+}
+	void delay2( )  // for 4 min
+	{
+		unsigned int x;
+    for(x=1;x<=4800;x++){
+TMOD=0x01;
+TL0=0XFE;
+TH0=0x4B;
+TR0=1;
+while(TF0==0);
+TR0=0;    
+TF0=0;  
+	} }
+	void delay3( )  // for 3 min
+	{
+		unsigned int x;
+    for(x=1;x<=3600;x++){
+TMOD=0x01;
+TL0=0XFE;
+TH0=0x4B;
+TR0=1;
+while(TF0==0);
+TR0=0;    
+TF0=0;  
+	} }
+	void delay4( )  // for 5 min
+{
+		unsigned int x;
+    for(x=1;x<=6000;x++){
+TMOD=0x01;
+TL0=0XFE;
+TH0=0x4B;
+TR0=1;
+while(TF0==0);
+TR0=0;    
+TF0=0;  
+	} }
+	end;
